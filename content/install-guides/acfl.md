@@ -142,6 +142,34 @@ install takes place **after** ACfL, you will no longer be able to fully
 uninstall ACfL.
 {{% /notice %}}
 
+
+## Download and install using System Packages - Ubuntu Linux
+
+Arm Compiler for Linux is available to install with the Ubuntu system package manager `apt` command.
+
+### Setup the ACfL package repository:
+
+Add the ACfL `apt` package repository to your Ubuntu 20.04 or 22.04 system:
+
+```bash { target="ubuntu:latest" }
+source /etc/os-release
+sudo apt update
+sudo apt install -y curl gnupg environment-modules
+curl http://obs.oss.arm.com:82/ACfL:/${NAME}-${VERSION_ID/%.*/}/${VERSION_CODENAME}/Release.key | sudo gpg --dearmor -o /usr/share/keyrings/obs-oss-arm.gpg
+echo "deb [signed-by=/usr/share/keyrings/obs-oss-arm.gpg] http://obs.oss.arm.com:82/ACfL:/${NAME}-${VERSION_ID/%.*/}/${VERSION_CODENAME}/ ./" | sudo tee /etc/apt/sources.list.d/obs-oss-arm.list
+sudo apt update
+```
+
+The ACfL Ubuntu package repository is now ready to use.
+
+### Install ACfL
+
+Download and install Arm Compiler for Linux with:
+
+```bash { target="ubuntu:latest" }
+sudo apt install acfl
+```
+
 ### Set up environment
 
 Arm Compiler for Linux uses environment modules to dynamically modify your user environment. Refer to the [Environment Modules documentation](https://lmod.readthedocs.io/en/latest/#id) for more information.
@@ -173,7 +201,7 @@ module avail
 To configure Arm Compiler for Linux:
 
 ```bash { env_source="~/.bashrc" }
-module load acfl/24.10
+module load acfl/24.10.1
 ```
 
 To configure GCC:
@@ -230,6 +258,7 @@ spack compiler find
 ```
 
 ACfL is now [ready to use](#armclang).
+
 
 
 ## Get started with Arm C/C++ compiler {#armclang}
